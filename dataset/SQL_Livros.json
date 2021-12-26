@@ -1,9 +1,12 @@
 {
-	"name": "AzureSqlTable1",
+	"name": "SQL_Livros",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",
 			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Livros"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
