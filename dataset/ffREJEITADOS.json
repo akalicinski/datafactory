@@ -1,0 +1,51 @@
+{
+	"name": "ffREJEITADOS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "ctkalicinski"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Obra",
+				"type": "String"
+			},
+			{
+				"name": "Autor",
+				"type": "String"
+			},
+			{
+				"name": "Nacionalidade",
+				"type": "String"
+			},
+			{
+				"name": "Gênero",
+				"type": "String"
+			},
+			{
+				"name": "Etnia",
+				"type": "String"
+			},
+			{
+				"name": "Valor",
+				"type": "String"
+			},
+			{
+				"name": "Quantidade",
+				"type": "String"
+			}
+		]
+	}
+}
