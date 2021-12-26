@@ -1,0 +1,9 @@
+{
+	"name": "DFKALICINSKI",
+	"location": "southcentralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "9b0ec340-3e54-4efc-bed2-1b63a93074a9",
+		"tenantId": "1302d912-ef49-433e-a2fc-669d42aed725"
+	}
+}

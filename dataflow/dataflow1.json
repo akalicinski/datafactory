@@ -1,0 +1,38 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Livros",
+						"type": "DatasetReference"
+					},
+					"name": "LivrosCSV"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Select"
+				},
+				{
+					"name": "Filtro"
+				},
+				{
+					"name": "CategorizaNacionalidade"
+				}
+			],
+			"script": "source(output(\n\t\tObra as string,\n\t\tAutor as string,\n\t\tNacionalidade as string,\n\t\t{Gênero} as string,\n\t\tEtnia as string,\n\t\tValor as double,\n\t\tQuantidade as short\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> LivrosCSV\nLivrosCSV select(mapColumn(\n\t\tObra,\n\t\tAutor,\n\t\tNacionalidade,\n\t\t{Gênero},\n\t\tEtnia,\n\t\tValor,\n\t\tQtd = Quantidade\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select\nSelect filter(toDecimal(Valor,10,2) > 30) ~> Filtro\nFiltro derive(CategoriaNacionalidade = iif(Nacionalidade == 'Brasileira','Nacional','Internacional')) ~> CategorizaNacionalidade\nCategorizaNacionalidade sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tObra,\n\t\tAutor,\n\t\tNacionalidade,\n\t\t{Gênero},\n\t\tEtnia,\n\t\tValor,\n\t\tQtd,\n\t\tCategoriaOrigem = CategoriaNacionalidade\n\t)) ~> sink1"
+		}
+	}
+}
