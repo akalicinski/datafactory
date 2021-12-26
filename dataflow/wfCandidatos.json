@@ -1,0 +1,45 @@
+{
+	"name": "wfCandidatos",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "tbCandidatos",
+						"type": "DatasetReference"
+					},
+					"name": "Candidatos"
+				},
+				{
+					"dataset": {
+						"referenceName": "tbInscricaoCandidato",
+						"type": "DatasetReference"
+					},
+					"name": "InscricaoCandidatos"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "TBJuncao",
+						"type": "DatasetReference"
+					},
+					"name": "TbJuncao"
+				}
+			],
+			"transformations": [
+				{
+					"name": "JoinerCandInsc"
+				},
+				{
+					"name": "Selecionar1"
+				},
+				{
+					"name": "ColunaDerivada1"
+				}
+			],
+			"script": "source(output(\n\t\tID_CANDIDATO as integer,\n\t\tID_INSCRICAO as integer,\n\t\tNOME_CANDIDATO as string,\n\t\tCPF_CANDIDATO as long,\n\t\tIDADE_CANDIDATO as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Candidatos\nsource(output(\n\t\tID_INSCRICAO as integer,\n\t\tNOME_CURSO as string,\n\t\tTURNO_CURSO as string,\n\t\tMODALIDADE_CURSO as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> InscricaoCandidatos\nCandidatos, InscricaoCandidatos join(Candidatos@ID_INSCRICAO == InscricaoCandidatos@ID_INSCRICAO,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinerCandInsc\nJoinerCandInsc select(mapColumn(\n\t\tNOME_CANDIDATO,\n\t\tCPF_CANDIDATO,\n\t\tIDADE_CANDIDATO,\n\t\tNOME_CURSO,\n\t\tTURNO_CURSO,\n\t\tMODALIDADE_CURSO\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Selecionar1\nSelecionar1 derive(TURNO_CURSO = case(TURNO_CURSO == 'Noturno', 'N',TURNO_CURSO == 'Diurno','D'),\n\t\tCPF_CANDIDATO = md5(CPF_CANDIDATO)) ~> ColunaDerivada1\nColunaDerivada1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> TbJuncao"
+		}
+	}
+}

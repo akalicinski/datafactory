@@ -1,0 +1,34 @@
+{
+	"name": "tbInscricaoCandidato",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_INSCRICAO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "NOME_CURSO",
+				"type": "varchar"
+			},
+			{
+				"name": "TURNO_CURSO",
+				"type": "varchar"
+			},
+			{
+				"name": "MODALIDADE_CURSO",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "INSCRICAO_CANDIDATO"
+		}
+	}
+}
