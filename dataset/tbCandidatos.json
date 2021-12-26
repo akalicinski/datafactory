@@ -1,0 +1,41 @@
+{
+	"name": "tbCandidatos",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_CANDIDATO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_INSCRICAO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "NOME_CANDIDATO",
+				"type": "varchar"
+			},
+			{
+				"name": "CPF_CANDIDATO",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "IDADE_CANDIDATO",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "CANDIDATOS"
+		}
+	}
+}
