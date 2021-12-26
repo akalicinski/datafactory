@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "FluxoTeste",
 	"properties": {
 		"activities": [
 			{
@@ -27,6 +27,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "Livros"
+		},
 		"annotations": [],
 		"lastPublishTime": "2021-12-26T12:13:53Z"
 	},

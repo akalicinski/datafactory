@@ -1,6 +1,9 @@
 {
 	"name": "dataflow1",
 	"properties": {
+		"folder": {
+			"name": "Livros"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -15,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "AzureSqlTable1",
+						"referenceName": "SQL_Livros",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
